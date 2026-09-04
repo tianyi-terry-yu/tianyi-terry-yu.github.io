@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terry (Tianyi) Yu, Patent Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #FAF8F3;
+    --paper-raised: #F3EFE6;
+    --line: #DED6C4;
+    --line-strong: #C9BFA8;
+    --ink: #1C2430;
+    --ink-soft: #5B6472;
+    --ink-faint: #9A9284;
+    --seal: #8B3A2F;
+    --draft: #2F4F5C;
+    --measure: 640px;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 18px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: var(--draft); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+  a:hover { color: var(--seal); }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--draft); outline-offset: 3px; }
+
+  .mono {
+    font-family: 'Space Grotesk', monospace;
+    letter-spacing: 0.01em;
+  }
+
+  /* ---------- Nav ---------- */
+  header.site-nav {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: rgba(250, 248, 243, 0.92);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 16px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 24px;
+  }
+  .nav-name {
+    font-family: 'Space Grotesk', monospace;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .nav-links {
+    display: flex;
+    gap: 22px;
+    font-family: 'Space Grotesk', monospace;
+    font-size: 12.5px;
+  }
+  .nav-links a { color: var(--ink-soft); text-decoration: none; }
+  .nav-links a:hover { color: var(--seal); }
+
+  /* ---------- Layout shell ---------- */
+  main { max-width: 860px; margin: 0 auto; padding: 0 28px; }
+
+  section {
+    padding: 64px 0 56px;
+    border-bottom: 1px solid var(--line);
+  }
+  section:last-of-type { border-bottom: none; }
+
+  .para-tag {
+    display: inline-block;
+    font-family: 'Space Grotesk', monospace;
+    font-size: 13px;
+    color: var(--ink-faint);
+    margin-bottom: 18px;
+  }
+
+  h1, h2, h3 { font-weight: 500; margin: 0; }
+
+  h2.section-title {
+    font-family: 'Space Grotesk', monospace;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    color: var(--draft);
+    margin-bottom: 28px;
+  }
+
+  p { max-width: var(--measure); }
+  p + p { margin-top: 1.1em; }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    padding-top: 72px;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 32px;
+    align-items: start;
+  }
+  .hero h1 {
+    font-size: 44px;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+  }
+  .hero .role {
+    font-family: 'Space Grotesk', monospace;
+    font-size: 14px;
+    color: var(--seal);
+    margin-top: 14px;
+    letter-spacing: 0.02em;
+  }
+  .hero .lede {
+    margin-top: 20px;
+    font-size: 19px;
+    color: var(--ink-soft);
+    max-width: 56ch;
+  }
+  .hero-fig {
+    align-self: center;
+    justify-self: center;
+  }
+  .hero-fig svg {
+    width: 100%;
+    height: auto;
+    max-width: 300px;
+  }
+  .hero-fig figcaption {
+    text-align: center;
+    font-family: 'Space Grotesk', monospace;
+    font-size: 11px;
+    color: var(--ink-faint);
+    margin-top: 8px;
+    letter-spacing: 0.05em;
+  }
+
+  /* ---------- Credential row ---------- */
+  .credentials {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 30px;
+  }
+  .credential {
+    font-family: 'Space Grotesk', monospace;
+    font-size: 12.5px;
+    border: 1px solid var(--line-strong);
+    padding: 6px 12px;
+    color: var(--ink-soft);
+  }
+
+  /* ---------- Claim-style list (Technical Background) ---------- */
+  ol.claim-list {
+    list-style: none;
+    counter-reset: claim;
+    margin: 26px 0 0;
+    padding: 0;
+    max-width: var(--measure);
+  }
+  ol.claim-list li {
+    counter-increment: claim;
+    position: relative;
+    padding-left: 34px;
+    margin-bottom: 18px;
+    line-height: 1.55;
+  }
+  ol.claim-list li::before {
+    content: counter(claim) ".";
+    position: absolute;
+    left: 0;
+    font-family: 'Space Grotesk', monospace;
+    font-size: 14px;
+    color: var(--draft);
+  }
+  ol.claim-list li .term {
+    font-weight: 500;
+  }
+
+  .closer {
+    margin-top: 28px;
+    padding: 16px 20px;
+    border-left: 2px solid var(--draft);
+    background: var(--paper-raised);
+    max-width: var(--measure);
+    font-size: 16.5px;
+    color: var(--ink-soft);
+  }
+
+  /* ---------- Application records (Legal Projects) ---------- */
+  .record {
+    border: 1px solid var(--line-strong);
+    margin-top: 24px;
+    max-width: 760px;
+  }
+  .record-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 18px;
+    background: var(--paper-raised);
+    border-bottom: 1px solid var(--line-strong);
+    font-family: 'Space Grotesk', monospace;
+    font-size: 12px;
+    color: var(--ink-faint);
+  }
+  .record-body { padding: 20px 18px 22px; }
+  .record-body h3 {
+    font-size: 20px;
+    margin-bottom: 6px;
+  }
+  .record-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 18px;
+    font-family: 'Space Grotesk', monospace;
+    font-size: 12px;
+    color: var(--ink-soft);
+    margin-bottom: 14px;
+  }
+  .record-meta span b { color: var(--ink); font-weight: 500; }
+  .record-body p { font-size: 16.5px; margin-top: 0; }
+
+  /* ---------- Sample writing / annotated claim ---------- */
+  .claim-sample {
+    display: grid;
+    grid-template-columns: 1fr 220px;
+    gap: 24px;
+    margin-top: 26px;
+    align-items: start;
+  }
+  .claim-text {
+    font-family: 'Space Grotesk', monospace;
+    font-size: 14px;
+    line-height: 1.9;
+    background: var(--paper-raised);
+    border: 1px solid var(--line-strong);
+    padding: 22px 24px;
+  }
+  .claim-text .num { color: var(--ink-faint); }
+  .claim-text .flag {
+    background: rgba(139, 58, 47, 0.1);
+    border-bottom: 1px dashed var(--seal);
+    padding: 0 1px;
+  }
+  .annotations {
+    font-family: 'Space Grotesk', monospace;
+    font-size: 12px;
+    color: var(--ink-soft);
+  }
+  .annotations .ann { margin-bottom: 18px; }
+  .annotations .ann .mark { color: var(--seal); font-weight: 500; }
+
+  .confidentiality-note {
+    margin-top: 22px;
+    font-size: 14px;
+    color: var(--ink-faint);
+    max-width: var(--measure);
+    font-style: italic;
+  }
+
+  /* ---------- Where I'm Headed / continuation note ---------- */
+  .continuation {
+    border: 1px solid var(--line-strong);
+    max-width: 720px;
+    margin-top: 24px;
+  }
+  .continuation-head {
+    padding: 12px 20px;
+    border-bottom: 1px dashed var(--line-strong);
+    font-family: 'Space Grotesk', monospace;
+    font-size: 12px;
+    color: var(--draft);
+    letter-spacing: 0.04em;
+  }
+  .continuation-body { padding: 22px 20px 24px; }
+  .continuation-body p { font-size: 17px; }
+
+  /* ---------- Footer ---------- */
+  footer {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 40px 28px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+    footer .contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-family: 'Space Grotesk', monospace;
+    font-size: 13px;
+  }
+  footer .contact-links a { text-decoration: none; }
+  footer .contact-links .label {
+    color: var(--ink-faint);
+    margin-right: 8px;
+  }
+  footer .docket {
+    font-family: 'Space Grotesk', monospace;
+    font-size: 11px;
+    color: var(--ink-faint);
+  }
+  .signature-block {
+    border-top: 1px solid var(--line-strong);
+    padding-top: 24px;
+    max-width: 360px;
+  }
+  .sig-line {
+    font-family: 'Space Grotesk', monospace;
+    font-size: 12px;
+    color: var(--ink-faint);
+    margin-bottom: 10px;
+  }
+  .sig-name {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-size: 22px;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .sig-role {
+    font-family: 'Space Grotesk', monospace;
+    font-size: 12px;
+    color: var(--ink-soft);
+    margin-bottom: 22px;
+  }
+
+  /* ---------- Hero draw-in (single orchestrated motion) ---------- */
+  .hero-fig svg path {
+    stroke-dasharray: 100;
+    stroke-dashoffset: 100;
+    animation: draw 1.6s ease-out forwards;
+  }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-fig svg path {
+      animation: none;
+      stroke-dashoffset: 0;
+    }
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 720px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-fig { justify-self: start; }
+    .hero h1 { font-size: 34px; }
+    .claim-sample { grid-template-columns: 1fr; }
+    .nav-links { gap: 14px; font-size: 11.5px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-nav">
+  <div class="nav-inner">
+    <a class="nav-name" href="#top">TERRY (TIANYI) YU · PATENT ENGINEER</a>
+    <nav class="nav-links">
+      <a href="#technical">Technical</a>
+      <a href="#projects">Legal Projects</a>
+      <a href="#writing">Sample Writing</a>
+      <a href="#headed">Looking Ahead</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" style="border-bottom: 1px solid var(--line);">
+    <div>
+      <span class="para-tag">[0001]</span>
+      <h1>Terry (Tianyi) Yu</h1>
+      <div class="role">Patent Engineer, Shihui Partners</div>
+      <div class="role">Georgia Institute of Technology</div>
+      <p class="lede">
+        I draft claims and specifications and argue office actions in
+        telecommunications, AI, and video processing, across three jurisdictions.
+        A dual master's in computer science and electrical engineering, alongside a
+        pre-law minor and ongoing legal coursework, lets me work the technical and
+        legal sides of a case at once.
+      </p>
+      <div class="credentials">
+        <div class="credential">BS/MS in Computer Science, MS in Electrical and Computer Engineering, BS in Mathematics at Georgia Tech</div>
+        <div class="credential">Pre-Law Minor</div>
+        <div class="credential">English · Chinese · Japanese (JLPT N2)</div>
+        <div class="credential">IAPP Conference Scholar</div>
+      </div>
+    </div>
+      <figure class="hero-fig">
+        <svg width="340" height="238" viewBox="0 0 400 280" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Venn diagram of two overlapping domains, technical and legal, meeting in the center at patent engineering; the legal domain spans patent prosecution and AI governance and privacy">
+      <!-- TECHNICAL circle -->
+      <circle cx="110" cy="140" r="100" stroke="#2F4F5C" stroke-width="1.4"/>
+      <text x="110" y="95" text-anchor="middle" font-size="13" font-family="sans-serif" fill="#1C2430">TECHNICAL</text>
+      <text x="110" y="178" text-anchor="middle" font-size="9" font-family="sans-serif" fill="#5B6472">Computing Systems</text>
+      <text x="110" y="192" text-anchor="middle" font-size="9" font-family="sans-serif" fill="#5B6472">Artificial Intelligence</text>
+      <text x="110" y="206" text-anchor="middle" font-size="9" font-family="sans-serif" fill="#5B6472">VLSI Systems &amp; Digital Design</text>
+      <text x="110" y="220" text-anchor="middle" font-size="9" font-family="sans-serif" fill="#5B6472">Telecommunications</text>
+      <line x1="110" y1="42" x2="110" y2="30" stroke="#8B3A2F" stroke-width="1" stroke-dasharray="2 2"/>
+      <text x="110" y="24" text-anchor="middle" font-size="8.5" font-family="sans-serif" fill="#9A9284">202</text>
+
+      <!-- LEGAL circle -->
+      <circle cx="290" cy="140" r="100" stroke="#2F4F5C" stroke-width="1.4"/>
+      <text x="290" y="95" text-anchor="middle" font-size="13" font-family="sans-serif" fill="#1C2430">LEGAL</text>
+      <text x="290" y="178" text-anchor="middle" font-size="9.5" font-family="sans-serif" fill="#5B6472">Intellectual Property</text>
+      <text x="290" y="193" text-anchor="middle" font-size="9" font-family="sans-serif" fill="#5B6472">AI Governance &amp; Privacy</text>
+      <line x1="290" y1="42" x2="290" y2="30" stroke="#8B3A2F" stroke-width="1" stroke-dasharray="2 2"/>
+      <text x="290" y="24" text-anchor="middle" font-size="8.5" font-family="sans-serif" fill="#9A9284">204</text>
+
+      <!-- Overlap badge -->
+      <rect x="155" y="118" width="90" height="44" rx="22" fill="#FAF8F3" stroke="#8B3A2F" stroke-width="1.2"/>
+      <text x="200" y="136" text-anchor="middle" font-size="10" font-family="sans-serif" fill="#1C2430">PATENT</text>
+      <text x="200" y="150" text-anchor="middle" font-size="10" font-family="sans-serif" fill="#1C2430">ENGINEERING</text>
+      <line x1="242" y1="122" x2="248" y2="115" stroke="#8B3A2F" stroke-width="1" stroke-dasharray="2 2"/>
+      <text x="254" y="112" text-anchor="start" font-size="8.5" font-family="sans-serif" fill="#9A9284">200</text>
+    </svg>
+    <figcaption>FIG. 1 — AREAS OF PRACTICE</figcaption>
+  </figure>
+  </section>
+
+  <!-- ============ TECHNICAL BACKGROUND ============ -->
+  <section id="technical">
+    <span class="para-tag">[0002]</span>
+    <h2 class="section-title">TECHNICAL BACKGROUND</h2>
+    <p>
+      My prosecution work is grounded in a technical foundation spanning
+      computer systems, telecommunications, and applied mathematics with a dual MS in
+      Computer Science (Computing Systems) and Electrical &amp; Computer Engineering
+      (Telecommunications) at Georgia Tech, on top of a completed BS in Computer
+      Science and an ongoing BS in Mathematics. Here are some research projects I've completed throughout my time at Georgia Tech and Shanghai High School:
+    </p>
+    <ol class="claim-list">
+      <li><span class="term">Adversarial robustness in language models</span>: evaluated
+        chain-of-thought attack strategies and user-deception risk in LLM systems,
+        Systems Software &amp; Security Lab.</li>
+      <li><span class="term">Efficient model adaptation</span>: LoRA fine-tuning and
+        few-shot techniques for low-resource LLM training.</li>
+      <li><span class="term">Networked and embedded systems</span>: optimized
+        computer-vision pipelines for lighter-than-air drones, deploying RKNN-based
+        target detection at 30 FPS.</li>
+      <li><span class="term">Compression and signal processing</span>: rebuilt a JPEG
+        compression framework to study quality–compression tradeoffs, informing my
+        read on video-coding claims.</li>
+    </ol>
+    <div class="closer">
+      I currently lead 12 graduate teaching assistants for Georgia Tech's Computer
+      Networking course, which is the same subject matter underlying much of the
+      telecommunications work I prosecute. This background is what lets me spot
+      where a claim is technically overbroad, underclaimed, or exposed to prior art
+      before an examiner does.
+    </div>
+  </section>
+
+  <!-- ============ LEGAL / PATENT PROJECTS ============ -->
+  <section id="projects">
+    <span class="para-tag">[0003]</span>
+    <h2 class="section-title">LEGAL &amp; PATENT PROJECTS</h2>
+    <p>
+      Prosecution experience alongside coursework spanning IP, privacy, and
+      international law.
+    </p>
+
+    <div class="record">
+      <div class="record-head">
+        <span>SHIHUI PARTNERS — HYBRID (BEIJING)</span>
+        <span>STATUS: CURRENT, JAN 2026–PRESENT</span>
+      </div>
+      <div class="record-body">
+        <h3>Patent Engineer Intern</h3>
+        <div class="record-meta">
+          <span>Jurisdiction: <b>USPTO · CNIPA · EPO</b></span>
+          <span>Sectors: <b>Telecom · AI · Video Processing</b></span>
+        </div>
+        <p>
+          Drafting specifications and claims and preparing office action responses
+          for clients including Nokia, Microsoft, and ByteDance. Conducting inventor
+          interviews directly and coordinate with in-house IP counsel to align
+          claim strategy with each client's portfolio goals.
+        </p>
+      </div>
+    </div>
+
+    <div class="record">
+      <div class="record-head">
+        <span>SCHWEGMAN, LUNDBERG &amp; WOESSNER — SAN JOSE</span>
+        <span>STATUS: COMPLETED, MAY 2025</span>
+      </div>
+      <div class="record-body">
+        <h3>Summer Program for Science &amp; Engineering Students</h3>
+        <div class="record-meta">
+          <span>Focus: <b>Claim Drafting · OA Response</b></span>
+          <span>Format: <b>Firm-run training program</b></span>
+        </div>
+        <p>
+          Sat in on invention disclosure meetings, drafted claims for a sample
+          patent application from scratch, and prepared a response to a §103
+          rejection.
+        </p>
+      </div>
+    </div>
+
+    <div class="record">
+      <div class="record-head">
+        <span>LEGAL COURSEWORK &amp; WRITING</span>
+        <span>SELECTED MATTERS</span>
+      </div>
+      <div class="record-body">
+        <ol class="claim-list" style="margin-top: 0;">
+          <li><span class="term">Copyright Transactions</span>: comparative analysis
+            of copyright injunctions and remuneration models in the U.S. and
+            beyond.</li>
+          <li><span class="term">Legal Argument</span>: memorial against the ICJ's
+            ruling in <em>Pulp Mills on the River Uruguay</em> (Argentina v.
+            Uruguay).</li>
+          <li><span class="term">Patent Transactions</span>: history of discrepancies
+            between American and Japanese joint patent ownership.</li>
+          <li><span class="term">Legal Analysis</span>: contrastive analysis of the
+            proposed Kids Online Safety and Privacy Act (KOSPA).</li>
+          <li><span class="term">Infringement Analysis</span>: potential
+            infringement exposure between two IDE providers, JetBrains and
+            Eclipse.</li>
+          <li><span class="term">Privacy Impact Assessment</span>: review of BeReal's
+            privacy terms with suggested compliance measures.</li>
+        </ol>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ============ SAMPLE PATENT WRITING ============ -->
+  <section id="writing">
+    <span class="para-tag">[0004]</span>
+    <h2 class="section-title">SAMPLE PATENT WRITING</h2>
+    
+
+    <div class="record">
+      <div class="record-head">
+        <span>Application US/19,009,819</span>
+        <span>STATUS: Response Filed Aug 2026</span>
+      </div>
+      <div class="record-body">
+        <h3>Final Office Action Response (Video Coding)</h3>
+        <div class="record-meta">
+          <span>Technology: <b>Cross-Component Prediction Coding</b></span>
+        </div>
+        <p>
+          Drafted in response to a Final Office Action rejecting claims under
+          §102/103 over two references (Luo, Wang) directed to a video-coding
+          claim reciting an adjustment to the relationship between luma and
+          chroma samples. Full case details can be accessed at <a href="https://globaldossier.uspto.gov/details/US/19009819/A/120558" target="_blank" rel="noopener">USPTO Global Dossier</a>. Excerpt from the traversal:
+        </p>
+        <h3 style="margin-top: 32px; font-size: 17px;">Claims 1-19: Distinguishing the Cited Art</h3>
+        <div class="claim-sample">
+          <div class="claim-text" style="font-style: italic;">
+            "It is seen that Luo at Para. [0032] merely describes a
+            hierarchical organization of video data ... and that these
+            segments 'may be sampled at different resolutions.' ... For a
+            POSITA, such disclosure merely teaches to either upsampling the
+            segment 308 as a whole ... or downsampling the segment 308 as a
+            whole .... In the context of such resolution adjustment of the
+            frame segment,
+            <span class="flag">the corresponding relationship between luma
+            and chroma samples within the frame segment remains
+            unchanged</span>. ... Therefore, Luo at Para. [0032] fails to
+            disclose or suggest claimed feature (1).<br><br>
+            Moreover ... It is seen that, Luo at Fig. 4 discloses at most 'a
+            block diagram of an encoder 400 according to implementations of
+            this disclosure.' Notably, stage 402 is labeled as 'INTRA/INTER
+            PREDICTION,'
+            <span class="flag">a generic prediction stage that Luo does not
+            describe as performing any cross-component prediction
+            operation</span>, let alone adjusting a corresponding
+            relationship between luma and chroma samples. ... Furthermore,
+            as acknowledged in the Office Action, Wang merely discloses a
+            video processing system wherein the prediction coding tool is a
+            cross-component prediction coding tool.
+            <span class="flag">Wang is also completely silent about
+            adjusting a corresponding relationship between luma and chroma
+            samples</span>."
+          </div>
+          <div class="annotations">
+            <div class="ann"><span class="mark">A</span> — distinguishes a
+              resolution-scaling operation (upsampling/downsampling) from the
+              claimed luma/chroma adjustment — same paragraph, different
+              operation entirely.</div>
+            <div class="ann"><span class="mark">B</span> — a figure's label
+              isn't its disclosed function. "INTRA/INTER PREDICTION" names a
+              category, not the specific operation the rejection
+              required.</div>
+            <div class="ann"><span class="mark">C</span> — closes the
+              combination: even paired with Wang, neither reference actually
+              discloses the claimed adjustment.</div>
+          </div>
+        </div>
+
+        <h3 style="margin-top: 32px; font-size: 17px;">Claim 20: Product-by-Process Strategy</h3>
+        <p>
+          Claim 20 was separately rejected under §102(a)(2) as anticipated by
+          Luo. Rather than traverse it, I canceled Claim 20 and added new
+          Claim 21, recasting the same technical content as a straight
+          method claim:
+        </p>
+        <div class="claim-sample">
+          <div class="claim-text">
+            <span class="num">21.</span> A method for storing a bitstream of a
+            video, comprising:<br><br>
+            &nbsp;&nbsp;obtaining a first video block, the first video block
+            being generated based on a first adjustment of a current video
+            block of the video, the first adjustment comprising at least one
+            of adjusting an orientation of the current video block or
+            adjusting positions of samples in the current video block;<br><br>
+            &nbsp;&nbsp;generating a second video block based on a second
+            adjustment of the first video block, the second adjustment being
+            an inverse process of the first adjustment;<br><br>
+            &nbsp;&nbsp;generating the bitstream based on the second video
+            block; and<br><br>
+            &nbsp;&nbsp;storing the bitstream in a non-transitory
+            computer-readable recording medium,<br>
+            &nbsp;&nbsp;wherein a corresponding relationship between luma and
+            chroma samples of the first video block is adjusted for a
+            cross-component prediction coding tool.
+          </div>
+          <div class="annotations">
+            <div class="ann"><span class="mark">A</span> — MPEP § 2113:
+              product-by-process claims are patentable or not based on the
+              product itself, not the process used to make it. Novel
+              process steps don't rescue a claim if the resulting product is
+              structurally the same as the prior art's.</div>
+            <div class="ann"><span class="mark">B</span> — recasting the same
+              steps as a method claim shifts examination onto the steps
+              themselves rather than the resulting product, sidestepping the
+              §2113 problem instead of arguing around it.</div>
+            <div class="ann"><span class="mark">C</span> — the luma/chroma
+              limitation carries over unchanged, preserving the same
+              substantive scope while changing claim type.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="confidentiality-note">
+      Drafted by me as part of Shihui Partners' prosecution work and filed under
+      supervising U.S. counsel per the firm's standard cross-border filing
+      arrangement.
+    </p>
+  </section>
+
+  <!-- ============ WHERE I'M HEADED ============ -->
+  <section id="headed">
+    <span class="para-tag">[0005]</span>
+    <h2 class="section-title">WHERE I'M HEADED</h2>
+    <div class="continuation">
+      <div class="continuation-head">CONTINUATION — CLAIMS PRIORITY TO PRESENT WORK</div>
+      <div class="continuation-body">
+        <p>
+          I'll complete my dual master's degrees in May 2027, and I've been admitted
+          to the Juris Doctor program at the National University of Singapore,
+          starting Fall 2027. At NUS, I'm planning two tracks in parallel:
+        </p>
+        <ol class="claim-list" style="max-width: 100%; margin-top: 18px;">
+          <li><span class="term">IP Practice</span>: formal legal training on top
+            of the technical grounding I already have, moving from drafting and
+            arguing patent claims toward broader IP prosecution and transactional
+            work.</li>
+          <li><span class="term">Privacy &amp; AI Governance</span>: building on
+            coursework I've already started (KOSPA, a BeReal privacy impact
+            assessment) into formal credentialing and practice in AI governance and
+            data protection.</li>
+        </ol>
+        <p style="margin-top: 18px;">
+          I intend to be qualified to practice in both the US and Singapore — a
+          base for cross-border IP work, drafting and arguing patent claims across
+          jurisdictions the way I already do, and for AI governance and privacy
+          advice that has to hold up across US, EU, and Asian regulatory
+          frameworks at once.
+        </p>
+        
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer id="contact">
+  <div class="signature-block">
+    <div class="para-tag" style="margin-bottom: 14px;">[0006]</div>
+    <div class="sig-line">Respectfully submitted,</div>
+    <div class="sig-name">Tianyi Yu</div>
+    <div class="sig-role">Patent Engineer</div>
+    <div class="contact-links">
+      <div><span class="label">EMAIL —</span><a href="mailto:tyu335@gatech.edu">tyu335@gatech.edu</a></div>
+      <div><span class="label">PHONE —</span><a href="tel:+14702771148">470-277-1148</a></div>
+      <div><span class="label">LINKEDIN —</span><a href="https://www.linkedin.com/in/tianyi-yu-9b9a47291/" target="_blank" rel="noopener">linkedin.com/in/tianyi-yu</a></div>
+    </div>
+  </div>
+  <div class="docket">REV. 2026-09-01</div>
+</footer>
+
+</body>
+</html>
